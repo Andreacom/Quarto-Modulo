@@ -1,0 +1,45 @@
+--Scriviamo un algoritmo (in forma testuale), cioè i passi necessari, per ognuno dei task selezionati.
+
+Aperitivo:
+1-Arrivare al bar
+2-prendere da bere
+3-bere
+4-pagare
+5-tornare a casa
+
+Andare in palestra:
+1-Arrivare in palestra 
+2-cambiarsi
+3-allenarsi
+4-lavarsi
+5-ripeti 2
+6- tornare a casa
+
+Fare la spesa:
+1-lista di cosa manca
+2-andare al supermercato
+3-leggere la lista
+4-comprare quello che c'è sulla lista
+5-pagare
+6-imbustare
+7-tornare a casa
+
+--Abbiamo 25 studenti; memorizzare questo dato in una variabile
+studenti = 25
+
+--Abbiamo 25 studenti; memorizzare questo dato in una variabile e stamparla a video
+studenti = 25
+print (studenti)
+
+--Abbiamo 25 studenti; memorizzare questo dato in una variabile. Arrivano altri 3 studenti; memorizzare questo dato in un'altra variabile
+studenti = 25
+nuovi_studenti = 3
+
+--Abbiamo 25 studenti; memorizzare questo dato in una variabile. Arrivano altri 3 studenti; memorizzare questo dato in un'altra variabile. Creare un'altra variabile ancora che conterrà la somma delle prime due, poi stamparla a video
+studenti = 25
+nuovi_studenti = 3
+totalestudenti = studenti + nuovi_studenti
+print (totalestudenti)
+
+--Creare una variabile che contiene la stringa "Epicode", quindi stamparla a video
+Studio = "Io studio in Epicode"
