@@ -43,3 +43,4 @@ print (totalestudenti)
 
 --Creare una variabile che contiene la stringa "Epicode", quindi stamparla a video
 Studio = "Io studio in Epicode"
+print(Studio)
