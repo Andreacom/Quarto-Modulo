@@ -1,0 +1,47 @@
+lista0_5 = [1,2,3,4,5]
+print (lista0_5)
+[1, 2, 3, 4, 5]
+
+film = ["big hero", "the blues brothers", "fast and furious"]
+print(film)
+['big hero', 'the blues brothers', 'fast and furious']
+
+nome_scuola = "Epicode"
+print(nome_scuola [0])
+E
+
+nome_scuola[0:3]
+'Epi'
+
+x = 10
+(x + 2) * 3
+36
+
+(10 + 2) * 3
+36
+
+x = input("input:")
+output1 = x [0:3]
+output2 = x [3:]
+outputTot = output1 + "..." + output2
+print(outputTot)
+input: Prova
+Pro...va
+
+len("windows")
+len("excel")
+len("powerpoint")
+len("word")
+
+Cod1 = "knt-S1"
+Cod2 = "cba-G9"
+Cod3 = "qtr-Z8"
+lista = [Cod1[3:], Cod2[3:], Cod3[3:]]
+print(lista)
+['-S1', '-G9', '-Z8']
+
+growth|value
+tech&growth
+healthcare - value
+healthcare & tech
+tech & (growth|value)
