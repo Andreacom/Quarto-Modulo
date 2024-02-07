@@ -1,0 +1,44 @@
+NomeScuola = "Epicode"
+indice = 0 #inizializzazione
+while indice < len(NomeScuola):
+    print(NomeScuola[indice])
+    indice += 1
+
+indice = 0 #inizio
+while indice <= 20:
+    print(indice)
+    indice +=1
+
+potenza = 0 #inizio
+while potenza <= 10:
+    print(2**potenza)
+    potenza += 1
+    
+potenza = 0
+limite = int(input ("Quanto vale N?"))
+while potenza <= limite:
+    print (2**potenza)
+    potenza += 1
+
+potenza = 0
+risultato = 2**potenza
+while risultato < 25000:
+    print(risultato)
+    potenza += 1
+    risultato = 2**potenza
+    
+studenti = ["Alex", "Bob", "Cindy", "Dan", "Emma", "Faith", "Grace", "Henry"] 
+corsi = ["Cybersecurity", "Data Analyst", "Backend", "Frontend", "Data Analyst", "Backend"]
+
+corsi.extend(["Frontend", "Cybersecurity"])
+len(corsi) == len (studenti)
+
+parola = input ("scrivi una parola")
+print( "hai scritto: ", parola)
+if len(parola) > 6:
+    print (parola[:3] + "..." + parola[3:])
+else:
+    print ("parola troppo corta")
+
+    
+
