@@ -1,0 +1,123 @@
+# usando for
+nomeScuola = "Epicode"
+for carattere in nomeScuola:
+    print(carattere)
+
+#usando while    
+indice = 0
+while indice < len(nomeScuola):
+    print(nomeScuola[indice])
+    indice += 1
+
+#Calcolare e stampare tutte le prime 10 potenze di 2 utilizzando un ciclo for.
+potenze = list(range(11))
+for indice in potenze:
+    print("2*",indice,"= ", 2**indice)
+
+# Calcolare (ma non stampare) le prime N potenze di K; ognuna di esse andrà memorizzata in coda a una lista. Alla fine, stampare la lista risultante.    
+N = list(range(int(input("quante potenze vuoi? "))))
+K = int(input("di quale valore? "))
+listaTot = []
+indice = 0
+while indice< len(N):
+    listaTot.append(K**N[indice])
+    indice += 1
+print (listaTot)
+    
+   
+N = list(range(int(input("quante potenze vuoi? "))))
+K = int(input("di quale valore? "))
+listaTot = []    
+
+for indice in N:
+    listaTot.append (K**N[indice]) #posso evitare di scrivere [indice] perchè in questo caso è già in N
+print(listaTot)
+
+#Abbiamo una lista con i guadagni degli ultimi 12 mesi: 
+guadagni = [100, 90, 70, 40, 50, 80, 90, 120, 80, 20, 50, 50]
+somma = 0
+for guadagno in guadagni:
+    somma += guadagno
+somma/len(guadagni)
+
+import numpy as np
+np.mean(np.array(guadagni)) #controllo
+
+#stampiamo, per ogni parola, quante volte appare la lettera "e"
+parole = ["Albergo", "Sedia", "Borgo", "Petalo", "Eremo", "Belvedere", "Semestre", "Esteta", "Sosta", "Orpello", "Abete", "Orologio", "Cesta", "Ermellino"]
+lista_e = []
+for parola in parole:
+    print(parola.count("e"))
+    lista_e.append(parola.count("e"))
+
+print(lista_e)
+
+len(lista_e) == len(parole) #controllo
+
+#trovare i codici fiscali che contengono "95", metterli in una lista, e alla fine stamparla
+lista_cf = ["ABCDEF95G01A123B", "GHIJKL91M02A321C", "MNOPQR89S03A456D", "STUVWX95Z04A654E", "XYZABC01D05A789F", "DEFGHI95J06A987G"]
+lista95 = []
+for cf in lista_cf:
+    if "95" in cf:
+        lista95.append(cf)
+    else:
+        continue
+print(lista95)
+
+for cf95 in lista95:
+    print (cf95[:6])
+
+
+studenti = ["Alex", "Bob", "Cindy", "Dan", "Emma", "Faith", "Grace", "Henry"] 
+corsi = ["Cybersecurity", "Data Analyst", "Backend", "Frontend", "Data Analyst", "Backend", "Frontend", "Cybersecurity"] 
+edizioni = [1, 2, 3, 2, 2, 1, 3, 3]
+    
+indice = 0
+for edizione in edizioni:
+    if edizione == 1:
+        print(studenti[indice])
+    indice += 1
+                   
+prezzi = ["100 €", "200 €", "500 €", "10 €", "50 €", "70 €"]
+prezziUS = []
+for prezzo in prezzi:
+    prezziUS.append(prezzo.replace("€","$"))
+print(prezziUS)
+
+#vogliamo dividere gli studenti in due squadre per un campionato di Uno nel seguente modo: selezioneremo i nomi in posizione pari per un squadra, e i nomi in posizione dispari per l'altra.
+pari = []
+dispari = []
+studenti = ["Alex", "Bob", "Cindy", "Dan", "Emma", "Faith", "Grace", "Henry", "Isabelle", "John"]
+for studente in studenti:
+    if studenti.index(studente) % 2 == 0:
+        pari.append (studente)
+    else:
+        dispari.append (studente)
+print(pari)
+print(dispari)
+
+#dobbiamo confrontare, stampando tutto a video, il guadagno di ogni mese con la media dei guadagni precedenti, e specificare nell'output se il guadagno attuale è maggiore o minore della media dei precedenti.
+guadagni = [100, 90, 70, 40, 50, 80, 90, 120, 80, 20, 50, 50]
+
+guadagniTemp = [100]
+indice = 0
+while indice < len(guadagni):
+    mediaTemp = np.mean(guadagniTemp)
+    if mediaTemp < guadagni[indice]:
+        print ("media prec: ",mediaTemp, "il guadagno è maggiore")
+    else:
+        print ("media prec: ",mediaTemp, "il guadagno è minore")
+    indice += 1
+    guadagniTemp.append(guadagni[indice])
+    
+ 
+    
+         
+
+
+    
+        
+
+    
+
+        
