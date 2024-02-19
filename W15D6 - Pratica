@@ -1,0 +1,62 @@
+# Che tipo di struttura dati o matematica potrebbe rappresentare? Notare che tutte le liste "interne" sono della stessa dimensione 
+import numpy as np
+mat = np.array([[0, 1, 2, 3, 4],
+               [5, 6, 7, 8, 9], 
+               [10, 11, 12, 13, 14]])
+type(mat)
+
+#Come facciamo per accedere ad un elemento in particolare?
+mat[1,3]
+
+linear_data = np.array([x for x in range(27)]) #prendi ogni x nel range 0-26 e fai un ndarray
+
+reshaped_data = linear_data.reshape((3, 3, 3)) #3 matrici di 3 righe e 3 colonne
+
+a,b,c = linear_data.reshape((3, 3, 3)) #mi torna utile perchè posso spacchettare il ndarray in diverse variabili
+
+reshaped_data[1,0,0] #nella seconda matrice (1) prendi il valore 0 della colonna 0
+
+# In una catena di montaggio abbiamo una struttura metallica di 28.75 cm di lunghezza; per assicurarne la stabilità, è necessario inserire 15 rivetti, dei quali uno all'inizio e uno alla fine, e tutti quanti separati dalla stessa distanza; come possiamo calcolare i punti esatti in cui inserire i rivetti tramite NumPy?
+
+np.round(np.linspace(0,28.75,15),2)
+
+
+import pandas as pd
+
+wine = pd.read_csv("C:/Users/comaz/Documents/Progetto Python/CSV/wine.csv")
+
+#Leggiamo quindi il dataset wine.csv, e visualizziamone le prime e le ultime righe;
+wine.head()
+wine.tail()
+
+#stavolta considerando soltanto le ultime 6 colonne
+wine.columns
+wineCut = wine.loc[:,"density" : "type"] #tutte le righe delle ultime 6 colonne
+
+#Visualizziamo un resoconto dei descrittori statistici di questa versione.
+wineCut.describe()
+
+iris = pd.read_csv("C:/Users/comaz/Documents/Progetto Python/CSV/iris.csv")
+
+iris.head()
+list(iris.columns)
+
+iris.tail(10)
+
+iris.describe()
+
+fatturati_dict = {1997: 12_000, 1998: 15_000, 1999: 20_000, 2000: 23_000, 2001: 25_000, 2002: 17_000, 2003: 14_000, 2004: 21_000}
+fatturati_series = pd.Series([12_000, 15_000, 20_000, 23_000, 25_000, 17_000, 14_000, 21_000], index=range(1997, 2005))
+
+fatturati_series
+fatturati_dict
+
+#differenza: 1) la serie è ordinata, quindi posso cercare valori tra indici; 2) nella serie l'indice è un supporto al valore, nel dizionario l'indice contiene il valore
+
+
+np.array([[1,1,1,1],
+         [5,1,1,1],
+         [20,-4,0,42]])
+
+matrice = np.random.randint(0,100,[5,5])
+np.round(matrice-matrice.min())/(matrice.max()-matrice.min())
