@@ -1,0 +1,166 @@
+import pandas as pd
+import os
+import seaborn as sms
+import numpy as np
+
+pub = pd.read_csv("C:/Users/comaz/Documents/Progetto Python/CSV/Mappa-dei-pub-circoli-locali-in-Italia.csv", encoding = "latin1", sep = ";")
+
+pub.shape
+pub.columns
+pub.index
+pub.head(1)
+pub.tail(1)
+pub.sample(5)
+
+pub.loc[:,"Anno inserimento"].value_counts(ascending = True)
+#alternativa
+pub["Anno inserimento"].unique()
+
+# quante attività ci sono nel quadrato di longitudine 9-10 e latitudine 45-46?
+quadratoPub = pub[(pub["Longitudine"] >= 9) & (pub["Longitudine"] <= 10) & (pub["Latitudine"] >= 45) & (pub["Latitudine"] <= 46)] 
+
+
+
+# quante attività ci sono nella provincia di Vicenza?
+pub.loc[pub.Provincia == "VICENZA","Nome"].count()
+
+
+#quante enoteche ci sono e come si chiamano
+pub.loc[
+    pub["Nome"].str.contains("Eno")
+].count()
+
+pub.isnull().sum() #mi serve per trovare valori NULLI
+pub.dropna(inplace = True) #togliere righe con valori nulli dentro (se voglio togliere solo i nulli di alcune colonne gli specifico subset = [colonna1, colonna2...])
+
+# attività in Lazio e Abruzzo insieme
+filtro = pub[ (pub["Regione"] == "Lazio") | (pub["Regione"] == "Abruzzo")]
+filtro.value_counts("Nome") #quante volte è presente lo stesso nome
+filtro.loc[:,"Nome"].count()#conteggio valori
+
+
+filePath = os.path.join(os.getcwd(),"CSV", "amazon.csv")
+with open (filePath) as f:
+    amazon = pd.read_csv(f)
+
+amazon.shape
+amazon.columns
+amazon.describe()
+amazon.info()
+amazon.loc[:,"Positive"].value_counts(normalize = True)
+amazon.sample(10)
+
+amazon.reviewText.str.contains("app").sum() #di tutti i valori, somma quelli che contengono "app"
+amazon.loc[amazon["reviewText"].str.contains("app")].count() #prendi SOLO le righe in cui trovi "app" in reviewText, poi contale
+
+amazon.loc[:,"reviewText"].str.contains("game").sum()
+amazon.loc[amazon["reviewText"].str.contains("game")].count()
+amazon.Positive.sum()
+
+amazon.count() - amazon.Positive.sum()
+
+indice1 = 0
+indice0 = 0
+
+while indice1 < 5 and indice0 < 5:
+    campione = amazon.sample(1)
+    if campione.loc[:,"Positive"].iloc[0] == 1:
+        print(campione)
+        indice1 += 1
+    elif campione.loc[:,"Positive"].iloc[0] == 0:
+        print(campione)
+        indice0 += 1
+
+campione.loc[:,"Positive"] #NON posso scrivere così perchè è una serie (indice + numero)
+campione.loc[:,"Positive"].iloc[0] #così prendo solo il numero 
+
+# Le recensioni che menzionano il Kindle sono perlopiù positive o negative?
+kindle = amazon.loc[amazon["reviewText"].str.contains("Kindle")] #prendo le recensioni del Kindle
+
+kindle.loc[:,"Positive"].sum()/ kindle.count() #sommo le positive (1) / totale
+
+file_path = os.path.join(os.getcwd(), "CSV", "diabetes.csv")
+diabete = pd.read_csv(file_path)
+
+diabete.shape
+diabete.columns
+diabete.info()
+diabete.describe()
+diabete.dtypes
+diabete.sample(5)
+
+df20 = diabete[diabete.loc[:,"Age (years)"] < 20] #così ho un dataframe filtrato
+
+df20_30 = diabete[(diabete.iloc[:,-2] >= 20) & (diabete.iloc[:,-2] <= 30)] 
+filtro20_30 = (diabete.iloc[:,-2] >= 20) & (diabete.iloc[:,-2] <= 30) #così creo una Series booleana da usare come filtro
+
+df30_40 = diabete[(diabete.iloc[:,-2] >30) & (diabete.iloc[:,-2] <= 40)]
+
+df40_50 = diabete[(diabete.iloc[:,-2] >40) & (diabete.iloc[:,-2] <= 50)]
+
+df50 = diabete[diabete.loc[:,"Age (years)"] > 50]
+
+
+for df in [df20, df20_30, df30_40, df40_50, df50]:
+    print(df.iloc[:,2].mean())
+
+Anno = diabete.groupby("Age (years)")
+Anno.mean()
+
+filePath = os.path.join(os.getcwd(),"CSV", "insurance.csv")
+ins = pd.read_csv(filePath)
+
+ins.shape
+ins.columns
+ins.sample(5)
+ins.describe()
+ins.info()
+
+ins.iloc[:,-2:].groupby("region").mean()
+ins.iloc[:,[1,-1]].groupby("sex").mean()
+ins.iloc[:,[4,-1]].groupby("smoker").mean() #prendi solo due colonne e raggruppa secondo una delle due
+ins.groupby("smoker")["charges"].mean()#raggruppa TUTTE le colonne secondo smoker e dammi la media di charges
+
+
+#Quali sono i descrittori statistici di bmi? Quali sono minimo, media e massimo di charges rispetto ai diversi quartili dei valori di bmi?
+
+ins_subset = ins.loc[:,["bmi","charges"]] #subset
+bmi_quartiles = ins_subset['bmi'].quantile([0, 0.25, 0.5, 0.75, 1.0]) #definisco i quartili di bmi (come fossero quattro categorie) --> prende gli indici dei quartili come sequence of scalar--> gli indici diventano gli edges delle classi
+
+ins_subset["bmi_quartiles"] = pd.cut(ins["bmi"],bmi_quartiles,labels = ["Q1","Q2","Q3","Q4"]) #sort i valori di bmi secondo le categorie di bmi_quartiles e nominali Q1...
+
+result = ins_subset.groupby("bmi_quartiles")["charges"].agg(func = ["min","mean","max"]) #agg serve a usare più funzioni 
+
+
+file_path = os.path.join(os.getcwd(),"CSV","pokemon.csv")
+pkm = pd.read_csv(file_path)
+
+pkm.shape
+pkm.columns
+pkm.sample(5) 
+pkm.info()
+
+pkm.loc[:,"#"].value_counts() #la prima colonna non può essere un indice perchè contiene valori duplicati
+
+pkm.set_index("#")
+
+pkm.iloc[:,2].value_counts()
+
+pkm[pkm.iloc[:,-1] == True]["Name"] #nomi dei leggendari
+
+pkm[(pkm.iloc[:,2]== "Grass") & (pkm.iloc[:,-1] == True)] #leggendari erba
+
+pkm[((pkm.iloc[:,2] == "Ice") | (pkm.iloc[:,2] == "Fire")) & (pkm.iloc[:,-1] == True)] #Leggendari Ice o Fire
+
+pkm.sort_values("Name") #ordino per nome
+
+pkm.set_index("Name") #setto name come indice
+
+pkm[pkm.iloc[:,1].str.startswith("D")] #statistiche pokemon che iniziano per D
+
+pkm[(pkm.iloc[:,-2] == 1) & (pkm.loc[:,"Attack"] > 50) & (pkm.loc[:,"Defense"] < 60)] #Pokémon della prima generazione con attacco > 50 e HP < 60
+
+pkm.info() #ci sono dati nulli
+
+
+
