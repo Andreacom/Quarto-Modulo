@@ -1,0 +1,90 @@
+import pandas as pd
+import os
+import numpy as np
+import humanize
+
+
+#Si richiede di verificare le dimensioni del dataset e le diciture presenti nell'intestazione;
+
+covid = pd.read_csv(os.path.join(os.getcwd(),"CSV","owid-covid-data.csv"))
+covid.shape
+covid.columns
+covid.info()
+covid.describe()
+covid.sample(10)
+
+
+#Si chiede poi per ogni continente di trovare il numero di casi totali avvenuti in quello stesso continente; si chiede di non considerare eventuali locazioni che nel dataset non appartengono ad alcun continente;
+sub_df = covid.dropna(subset = ["continent"])
+sub_df.groupby("continent")["total_cases"].sum()
+
+
+#Sempre riguardo i casi di COVID totali, si chiede di sviluppare una funzione che prenda in input il dataset e due nomi di continenti, e che ne confronti i seguenti relativi descrittori statistici: valori minimo e massimo, media, e percentuale rispetto al numero dei casi totali nel mondo (calcolati anche sulle locazioni senza indicazione di continente);
+
+def statistiche_continenti (dataset = covid, continente1 = "Europe", continente2 = "Asia"):
+    C1 = (dataset.iloc[:,1] == "continente1") | (dataset["continent"].isna())
+    C2 = (dataset.iloc[:,1] == "continente2") | (dataset["continent"].isna())
+    
+    df1 = pd.DataFrame(dataset[C1]["total_cases"])
+    df2 = pd.DataFrame(dataset[C2]["total_cases"])
+    
+    minimo = min(np.min(df1), np.min(df2))
+    massimo = humanize.intword(max(np.max(df1), np.max(df2)))
+    media = np.mean(np.concatenate([pd.notnull(df1), pd.notnull(df2)]))
+    rapporto1 = humanize.scientific((np.sum(C1)) / (np.sum(dataset["total_cases"])))
+    rapporto2 = humanize.scientific((np.sum(C2)) / (np.sum(dataset["total_cases"])))
+    
+    print("il minimo è:", minimo)
+    print("il massimo è:", massimo)
+    print("la media è:", media)
+    print("la percentuale di", "continente1", "sul totale è:", rapporto1)
+    print("la percentuale di", "continente2", "sul totale è:", rapporto2)
+          
+  
+statistiche_continenti(covid,"Europe","Asia") 
+    
+
+#Si chiede poi di effettuare lo stesso tipo di analisi – anche in questo caso sviluppando una funzione ad hoc – per il numero di vaccinazioni totali per ogni continente
+
+covid.info()
+def vaccinazioni (dataset, continente1, continente2):
+    filtro1 = (dataset.iloc[:,1] == continente1) | (dataset.iloc[:,1].isna())
+    filtro2 = (dataset.iloc[:,1] == continente2) | (dataset.iloc[:,1].isna())
+    
+    V1 = pd.DataFrame(dataset[filtro1]["total_vaccinations"])
+    V2 = pd.DataFrame(dataset[filtro2]["total_vaccinations"])
+    
+    minimo = min(np.min(V1), np.min(V2))
+    massimo = humanize.intword(max(np.max(V1), np.max(V2)))
+    media = np.mean(np.concatenate([pd.notnull(V1),pd.notnull(V2)]))
+    rapporto1 = humanize.scientific((np.sum(V1)) / (np.sum(dataset["total_vaccinations"])))
+    rapporto2 = humanize.scientific((np.sum(V2)) / (np.sum(dataset["total_vaccinations"])))
+    
+    print("il minimo è:", minimo)
+    print("il massimo è:", massimo)
+    print("la media è:", media)
+    print("la percentuale di", "rapporto1", "sul totale è:", rapporto1)
+    print("la percentuale di", "rapporto2", "sul totale è:", rapporto2)
+
+vaccinazioni(covid, "Europe", "Africa")
+
+#Alla fine, basandosi sui calcoli fatti, il committente chiede di stilare un breve (tre o quattro righe) paragrafo testuale riassuntivo sulle statistiche di casi e vaccinazioni, che si concentri solo sulle differenze esistenti tra Europa, Sud America e Oceania.
+
+statistiche_continenti(covid, "Europe", "South America") 
+vaccinazioni(covid, "Europe", "South America") 
+
+statistiche_continenti(covid, "Europe", "Oceania") 
+vaccinazioni(covid, "Europe", "Oceania") 
+
+statistiche_continenti(covid, "Oceania", "South America") 
+vaccinazioni(covid, "Oceania", "South America") 
+
+
+#Tra Europa, Sud America e Oceania il valore più alto di casi registrati è di 774.6 milioni con una media di casi totali di 0.98 e un rapporto tra casi relativi ai continenti e casi totali di 7.97*e-9.
+#Il massimo numero di vaccinazioni raggiunte è di 13.6 miliardi con una media di 0.38 e un rapporto tra casi continentali e casi totali tra 8.50*e-1 e 8.68*e-1
+
+
+          
+  
+
+    
